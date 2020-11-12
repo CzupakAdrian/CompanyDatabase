@@ -1,0 +1,1 @@
+repo wymiany sql do bazy danych
