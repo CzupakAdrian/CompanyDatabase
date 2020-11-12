@@ -1,62 +1,62 @@
 -- widok do wyświetlania workersów i wstawiania w odpowiednie miejsce
-create view all_workers as
-select * from workers
-union
-select * from workers@tokyo_link;
+CREATE view all_workers AS
+SELECT * FROM workers
+UNION
+SELECT * FROM workers@tokyo_link;
 
--- fragmentacja pozioma workers - insert
-create or replace NONEDITIONABLE trigger insert_workers
-INSTEAD OF insert ON all_workers
-for each row
-declare 
-    location varchar2(10);
+-- fragmentacja pozioma workers - INSERT
+CREATE OR replace NONEDITIONABLE trigger INSERT_workers
+INSTEAD OF INSERT ON all_workers
+FOR EACH ROW
+DECLARE 
+    location VARCHAR2(10);
     next_id int;
     BEGIN
-        select name into location from locations where id=:new.location_id;
-        select max(id) + 1 into next_id from all_workers;
-        if location = 'tokyo' then
-            insert into workers@tokyo_link values(next_id, :new.name, :new.surname, :new.birth_date, :new.position_id, :new.location_id,
+        SELECT name INTO location FROM locations WHERE id=:new.location_id;
+        SELECT max(id) + 1 INTO next_id FROM all_workers;
+        IF location = 'tokyo' THEN
+            INSERT INTO workers@tokyo_link VALUES(next_id, :new.name, :new.surname, :new.birth_date, :new.position_id, :new.location_id,
                                             :new.insurance_id);
-        else
-            insert into workers values(next_id, :new.name, :new.surname, :new.birth_date, :new.position_id, :new.location_id,
+        ELSE
+            INSERT INTO workers VALUES(next_id, :new.name, :new.surname, :new.birth_date, :new.position_id, :new.location_id,
                                             :new.insurance_id);
-        end if;
+        END IF;
   END;
 
--- delete
-create or replace NONEDITIONABLE trigger delete_workers
-instead of delete ON all_workers
-for each row
-declare 
-    location varchar2(10);
+-- DELETE
+CREATE OR replace NONEDITIONABLE trigger DELETE_workers
+INSTEAD OF DELETE ON all_workers
+FOR EACH ROW
+DECLARE 
+    location VARCHAR2(10);
     loc_id int;
     BEGIN
-        select location_id into loc_id from all_workers where id = :old.id;
-        select name into location from locations where id=loc_id;
-        if location = 'tokyo' then
-            delete from workers@tokyo_link where id = :old.id;
-        else
-            delete from workers where id = :old.id;
-        end if;
+        SELECT location_id INTO loc_id FROM all_workers WHERE id = :old.id;
+        SELECT name INTO location FROM locations WHERE id=loc_id;
+        IF location = 'tokyo' THEN
+            DELETE FROM workers@tokyo_link WHERE id = :old.id;
+        ELSE
+            DELETE FROM workers WHERE id = :old.id;
+        END IF;
     END;
 
--- update
-create or replace NONEDITIONABLE trigger update_workers
-instead of update on all_workers
-for each row
-declare 
-    location varchar2(10);
+-- UPDATE
+CREATE OR replace NONEDITIONABLE trigger update_workers
+INSTEAD OF UPDATE on all_workers
+FOR EACH ROW
+DECLARE 
+    location VARCHAR2(10);
     loc_id int;
-    begin
-        select location_id into loc_id from all_workers where id = :old.id;
-        select name into location from locations where id=loc_id;
-        if location = 'tokyo' then
-            update workers@tokyo_link set name=:new.name, surname=:new.surname, birth_date=:new.birth_date, 
+    BEGIN
+        SELECT location_id INTO loc_id FROM all_workers WHERE id = :old.id;
+        SELECT name INTO location FROM locations WHERE id=loc_id;
+        IF location = 'tokyo' THEN
+            UPDATE workers@tokyo_link SET name=:new.name, surname=:new.surname, birth_date=:new.birth_date, 
                                         position_id=:new.position_id, location_id=:new.location_id, insurance_id=:new.insurance_id
-            where id = :new.id;
-        else
-            update workers set name=:new.name, surname=:new.surname, birth_date=:new.birth_date, 
+            WHERE id = :new.id;
+        ELSE
+            UPDATE workers SET name=:new.name, surname=:new.surname, birth_date=:new.birth_date, 
                                         position_id=:new.position_id, location_id=:new.location_id, insurance_id=:new.insurance_id
-            where id = :new.id;
-        end if;
-    end;
+            WHERE id = :new.id;
+        END IF;
+    END;
