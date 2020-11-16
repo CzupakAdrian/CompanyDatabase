@@ -1,0 +1,6 @@
+pyqt5
+pyqt5-tools
+SQLAlchemy
+cx-Oracle # Needs instant client https://www.oracle.com/database/technologies/instant-client/winx64-64-downloads.html
+pandas
+numpy==1.19.3 # newer throws error
