@@ -1,5 +1,4 @@
 from sqlalchemy.engine import create_engine
-import cx_Oracle
 
 DIALECT = 'oracle'
 SQL_DRIVER = 'cx_oracle'
@@ -11,8 +10,17 @@ SERVICE = 'ORCLCDB.localdomain'  # enter the oracle db service name
 ENGINE_PATH_WIN_AUTH = DIALECT + '+' + SQL_DRIVER + '://' + USERNAME + ':' + PASSWORD + '@' + HOST + ':' + str(
     PORT) + '/?service_name=' + SERVICE
 
-engine = create_engine(ENGINE_PATH_WIN_AUTH)
+engine = create_engine(ENGINE_PATH_WIN_AUTH, max_identifier_length=128)
 
+from database_objects.Location import Location
+from sqlalchemy.orm import sessionmaker
+Session = sessionmaker(bind=engine)
+session = Session()
+locations = session.query(Location).order_by(Location.id)
+# for location in locations:
+#     print(location.id, location.name)
+# to pandas dataframe
 import pandas as pd
-test_df = pd.read_sql_query('SELECT * FROM global_name', engine)
-print(test_df)
+conn = session.bind
+df = pd.read_sql_query(locations.statement, con=conn, index_col='id')
+print(df)
