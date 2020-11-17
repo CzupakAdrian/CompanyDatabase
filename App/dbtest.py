@@ -1,5 +1,5 @@
 from sqlalchemy.engine import create_engine
-from database_objects.Objects import Worker, WorkerPreference
+from database_objects.Objects import Worker, WorkerPreference, GlobalWorker, GlobalWorkerPreference
 
 DIALECT = 'oracle'
 SQL_DRIVER = 'cx_oracle'
@@ -16,7 +16,7 @@ engine = create_engine(ENGINE_PATH_WIN_AUTH, max_identifier_length=128)
 from sqlalchemy.orm import sessionmaker
 Session = sessionmaker(bind=engine)
 session = Session()
-workers = session.query(Worker).all()
-for worker in workers:
-    print(worker.id, worker.name, worker.location.name)
+workers_preferences = session.query(GlobalWorkerPreference).all()
+for worker_preference in workers_preferences:
+    print(worker_preference.worker.name, worker_preference.location.name)
 

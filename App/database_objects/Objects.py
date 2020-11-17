@@ -29,11 +29,11 @@ class Insurer(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String)
 
-
+# Modify to vertical fragmentation
 class Insurance(Base):
     __tablename__ = 'insurances'
     id = Column(Integer, primary_key=True)
-    insurer_id = Column(Integer)
+    insurer_id = Column(Integer, ForeignKey('insurers.id'))
     expiration_date = Column(Date)
 
 
@@ -49,4 +49,26 @@ class WorkerPreference(Base):
     location_id = Column(Integer, ForeignKey('locations.id'))
 
     worker = relationship('Worker')
+    location = relationship('Location')
+
+
+class GlobalWorker(Base):
+    __tablename__ = 'all_workers'
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    surname = Column(String)
+    birth_date = Column(Date)
+    position_id = Column(Integer)
+    location_id = Column(Integer, ForeignKey('locations.id'))
+    insurance_id = Column(Integer)
+
+    location = relationship('Location')
+
+
+class GlobalWorkerPreference(Base):
+    __tablename__ = 'all_preferences'
+    worker_id = Column(Integer, ForeignKey('all_workers.id'), primary_key=True)
+    location_id = Column(Integer, ForeignKey('locations.id'))
+
+    worker = relationship('GlobalWorker')
     location = relationship('Location')
