@@ -1,4 +1,5 @@
 from sqlalchemy.engine import create_engine
+from database_objects.Objects import Worker, WorkerPreference
 
 DIALECT = 'oracle'
 SQL_DRIVER = 'cx_oracle'
@@ -12,15 +13,10 @@ ENGINE_PATH_WIN_AUTH = DIALECT + '+' + SQL_DRIVER + '://' + USERNAME + ':' + PAS
 
 engine = create_engine(ENGINE_PATH_WIN_AUTH, max_identifier_length=128)
 
-from database_objects.Location import Location
 from sqlalchemy.orm import sessionmaker
 Session = sessionmaker(bind=engine)
 session = Session()
-locations = session.query(Location).order_by(Location.id)
-# for location in locations:
-#     print(location.id, location.name)
-# to pandas dataframe
-import pandas as pd
-conn = session.bind
-df = pd.read_sql_query(locations.statement, con=conn, index_col='id')
-print(df)
+workers = session.query(Worker).all()
+for worker in workers:
+    print(worker.id, worker.name, worker.location.name)
+
