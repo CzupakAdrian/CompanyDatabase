@@ -1,6 +1,6 @@
 -- serwer 1 (u mnie sarajevo)
 CREATE TABLE insurances (
-    id INTEGER NOT NULL,
+    id INTEGER NOT NULL PRIMARY KEY,
     expiration_date DATE
 );
 COMMIT;
@@ -30,7 +30,7 @@ COMMIT;
 
 -- serwer 2 (u mnie tokyo)
 CREATE TABLE insurances (
-    id INTEGER NOT NULL,
+    id INTEGER NOT NULL PRIMARY KEY,
     insurer_id INTEGER
 );
 COMMIT;

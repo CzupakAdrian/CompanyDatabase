@@ -1,7 +1,7 @@
 CREATE TABLE positions (
-    id INTEGER NOT NULL,
+    id INTEGER NOT NULL PRIMARY KEY,
     position VARCHAR(20) NOT NULL,
-    CONSTRAINT both_unique UNIQUE (id, position)
+    CONSTRAINT unique_postion UNIQUE (position)
 );
 
 -- just for triggering
