@@ -15,3 +15,23 @@ REFRESH FAST
 NEXT SYSDATE+(1/(24*60*6))
 AS
 SELECT id, name FROM insurers@tokyo_link;
+
+-- Obie bazy
+CREATE OR REPLACE VIEW insurers_local AS
+SELECT * FROM insurers;
+
+-- Sarajevo insert trigger
+CREATE OR REPLACE TRIGGER insert_insurers
+INSTEAD OF INSERT ON insurers_local
+FOR EACH ROW
+BEGIN
+    INSERT INTO insurers@tokyo_link (id, name) VALUES(:new.id, :new.name);
+END;
+
+-- Tokyo insert trigger
+CREATE OR REPLACE TRIGGER insert_insurers
+INSTEAD OF INSERT ON insurers_local
+FOR EACH ROW
+BEGIN
+    INSERT INTO insurers (id, name) VALUES(:new.id, :new.name);
+END;

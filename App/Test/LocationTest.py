@@ -1,8 +1,6 @@
-from App.orm_controllers.DbConnection import DbConnection
-from Objects import Location
+from orm_controllers.DbConnection import DbConnection
+from database_objects.Objects import Location
 import pandas as pd
-import datetime
-import random
 
 
 class LocationTest(DbConnection):

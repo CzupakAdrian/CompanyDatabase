@@ -1,22 +1,22 @@
-from DbConnection import DbConnection
-from Objects import Insurer, Insurance, Worker, Location, Position
-import pandas as pd
+from orm_controllers.DbConnection import DbConnection
+from database_objects.Objects import Insurer, GlobalInsurance, Worker, Location, Position
+
 
 class TablesController(DbConnection):
     def __init__(self):
         super().__init__()
 
-    def getAllInsurances(self):
-        print(self.session.query(Insurance.id, Insurance.expiration_date, Insurer.name).\
-                filter(Insurance.insurer_id == Insurer.id).all())
+    def getAllGlobalInsurances(self):
+        print(self.session.query(GlobalInsurance.id, GlobalInsurance.expiration_date, Insurer.name). \
+              filter(GlobalInsurance.insurer_id == Insurer.id).all())
 
     def getAllWorkers(self):
         print(self.session.query(Worker.name, Worker.surname, Worker.birth_date, Location.name,
-                                 Position.position, Insurance.expiration_date, Insurer.name)
+                                 Position.position, GlobalInsurance.expiration_date, Insurer.name)
               .filter(Worker.location_id == Location.id)
               .filter(Worker.position_id == Position.id)
-              .filter(Worker.insurance_id == Insurance.id)
-              .filter(Insurance.insurer_id == Insurer.id)
+              .filter(Worker.insurance_id == GlobalInsurance.id)
+              .filter(GlobalInsurance.insurer_id == Insurer.id)
               .all())
 
 

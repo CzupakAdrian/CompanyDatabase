@@ -20,3 +20,8 @@ REFERENCES locations(id);
 ALTER TABLE workers_preferences
 ADD CONSTRAINT fk_workers_pref_id FOREIGN KEY (worker_id)
 REFERENCES workers(id);
+
+-- Tylko baza 2 Tokyo
+ALTER TABLE insurances
+ADD CONSTRAINT fk_insurer_id FOREIGN KEY (insurer_id)
+REFERENCES insurers(id);

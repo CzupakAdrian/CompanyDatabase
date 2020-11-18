@@ -6,8 +6,8 @@ class DbConnection:
     def __init__(self):
         self.DIALECT = 'oracle'
         self.SQL_DRIVER = 'cx_oracle'
-        self.USERNAME = 'Master'  # enter your username
-        self.PASSWORD = 'Master'  # enter your password
+        self.USERNAME = 'albert_rio'  # enter your username
+        self.PASSWORD = 'albert'  # enter your password
         self.HOST = 'localhost'  # enter the oracle db host url
         self.PORT = 1521  # enter the oracle port number
         self.SERVICE = 'ORCLCDB.localdomain'  # enter the oracle db service name
