@@ -1,5 +1,5 @@
 from App.orm_controllers.DbConnection import DbConnection
-from Insurance import Insurance
+from Objects import Insurance
 import pandas as pd
 import datetime
 import random

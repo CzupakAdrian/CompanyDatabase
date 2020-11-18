@@ -6,7 +6,7 @@ Base = declarative_base()
 
 
 class Location(Base):
-    __tablename__ = 'locations'
+    __tablename__ = 'locations_global'
     id = Column(Integer, primary_key=True)
     name = Column(String)
 
@@ -18,7 +18,7 @@ class Worker(Base):
     surname = Column(String)
     birth_date = Column(Date)
     position_id = Column(Integer)
-    location_id = Column(Integer, ForeignKey('locations.id'))
+    location_id = Column(Integer, ForeignKey('locations_global.id'))
     insurance_id = Column(Integer)
 
     location = relationship('Location')
@@ -31,14 +31,13 @@ class Insurer(Base):
 
 # Modify to vertical fragmentation
 class Insurance(Base):
-    __tablename__ = 'insurances'
+    __tablename__ = 'insurances_global'
     id = Column(Integer, primary_key=True)
     insurer_id = Column(Integer, ForeignKey('insurers.id'))
     expiration_date = Column(Date)
 
-
 class Position(Base):
-    __tablename__ = 'positions'
+    __tablename__ = 'positions_global'
     id = Column(Integer, primary_key=True)
     position = Column(String)
 
@@ -46,7 +45,7 @@ class Position(Base):
 class WorkerPreference(Base):
     __tablename__ = 'workers_preferences'
     worker_id = Column(Integer, ForeignKey('workers.id'), primary_key=True)
-    location_id = Column(Integer, ForeignKey('locations.id'))
+    location_id = Column(Integer, ForeignKey('locations_global.id'))
 
     worker = relationship('Worker')
     location = relationship('Location')
@@ -59,7 +58,7 @@ class GlobalWorker(Base):
     surname = Column(String)
     birth_date = Column(Date)
     position_id = Column(Integer)
-    location_id = Column(Integer, ForeignKey('locations.id'))
+    location_id = Column(Integer, ForeignKey('locations_global.id'))
     insurance_id = Column(Integer)
 
     location = relationship('Location')
@@ -68,7 +67,7 @@ class GlobalWorker(Base):
 class GlobalWorkerPreference(Base):
     __tablename__ = 'all_preferences'
     worker_id = Column(Integer, ForeignKey('all_workers.id'), primary_key=True)
-    location_id = Column(Integer, ForeignKey('locations.id'))
+    location_id = Column(Integer, ForeignKey('locations_global.id'))
 
     worker = relationship('GlobalWorker')
     location = relationship('Location')
