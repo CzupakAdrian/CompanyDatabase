@@ -104,5 +104,3 @@ class GlobalInsurance(Base):
 
     insurer = relationship('Insurerr')
 
-
-

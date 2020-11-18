@@ -8,11 +8,11 @@ class InsurerTest(DbConnection):
         super().__init__()
 
     def getInsurers(self):
-        insurers = self.session.query(Insurer).order_by(Insurer.id)
+        insurers = self.session.query(InsurerLocal).order_by(InsurerLocal.id)
         print(pd.read_sql_query(insurers.statement, con=self.conn, index_col='id'))
 
     def deleteAllInsurers(self):
-        insurers = self.session.query(Insurer).order_by(Insurer.id)
+        insurers = self.session.query(InsurerLocal).order_by(InsurerLocal.id)
         for row in insurers:
             self.session.delete(row)
         self.session.commit()
@@ -31,7 +31,7 @@ class InsurerTest(DbConnection):
         self.session.commit()
 
     def getMaxInsurerId(self):
-        insurers = self.session.query(Insurer).order_by(Insurer.id)
+        insurers = self.session.query(InsurerLocal).order_by(InsurerLocal.id)
         return max(i.id for i in insurers)
 
 
