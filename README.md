@@ -11,4 +11,4 @@ FLOW:
 6. workers_init.sql - odapalić na każdym serwerze (najpierw dopisać linki)
 7. workers_triggers.sql - odpalić na każdym serwerze każdy trigger oddzielnie (najpierw dopisać linki i pozmieniać warunki)
 8. <to co ty wysłałeś - preferences i relations>
-9.insurances.sql - odpalić na każdym serwerze stosowną część (opis wewnątrz)
+9. insurances.sql - odpalić na każdym serwerze stosowną część (opis wewnątrz)
