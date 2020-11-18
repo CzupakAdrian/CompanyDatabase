@@ -1,6 +1,7 @@
 repo wymiany sql do bazy danych
 
 FLOW:
+
 0. account_unlock.sql - w razie zablokowanie konta (odpalić z SYS)
 1. link_creation.sql - utworzyć na każdym serwerze dla każdego z pozostałych serwerów
 2. positions.sql - odpalić na każdym serwerze (najpierw dopisać linki)
