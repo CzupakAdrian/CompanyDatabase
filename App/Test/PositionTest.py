@@ -1,5 +1,5 @@
-from App.orm_controllers.DbConnection import DbConnection
-from Objects import Position
+from orm_controllers.DbConnection import DbConnection
+from database_objects.Objects import Position
 import pandas as pd
 
 
@@ -17,14 +17,15 @@ class PositionTest(DbConnection):
             self.session.delete(row)
         self.session.commit()
 
+
     def addPositions(self):
         self.session.add(Position(id=1, position="Kierownik"))
-        self.session.add(Position(id=1, position="Stażysta"))
-        self.session.add(Position(id=1, position="HR"))
-        self.session.add(Position(id=1, position="Tester"))
-        self.session.add(Position(id=1, position="Sprzątacz"))
-        self.session.add(Position(id=1, position="Stołówkowa"))
-        self.session.add(Position(id=1, position="Scrum Master"))
+        self.session.add(Position(id=2, position="Stażysta"))
+        self.session.add(Position(id=3, position="HR"))
+        self.session.add(Position(id=4, position="Tester"))
+        self.session.add(Position(id=5, position="Sprzątacz"))
+        self.session.add(Position(id=6, position="Stołówkowa"))
+        self.session.add(Position(id=7, position="Scrum Master"))
         self.session.commit()
 
 
