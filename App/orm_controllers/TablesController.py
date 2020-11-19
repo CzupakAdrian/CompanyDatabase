@@ -1,10 +1,5 @@
 from orm_controllers.DbConnection import DbConnection
-<<<<<<< HEAD
 from database_objects.Objects import Insurer, GlobalInsurance, Worker, Location, Position
-=======
-from database_objects.Objects import InsurerLocal, GlobalInsurance, Worker, Location, Position
->>>>>>> d99846acdc24a3cf0352ae571f75e96d27ef486f
-
 
 class TablesController(DbConnection):
     def __init__(self):
