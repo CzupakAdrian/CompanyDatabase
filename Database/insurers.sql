@@ -23,17 +23,19 @@ SELECT * FROM insurers;
 -- Sarajevo insert trigger
 CREATE OR REPLACE TRIGGER insert_insurers
 INSTEAD OF INSERT ON insurers_local
-FOR EACH ROW
 BEGIN
-    INSERT INTO insurers@tokyo_link (id, name) VALUES(:new.id, :new.name);
+    INSERT INTO insurers_local@tokyo_link (id, name) VALUES(:new.id, :new.name);
 END;
 
 -- Tokyo insert trigger
 CREATE OR REPLACE TRIGGER insert_insurers
 INSTEAD OF INSERT ON insurers_local
 FOR EACH ROW
+DECLARE
+    next_id int;
 BEGIN
-    INSERT INTO insurers (id, name) VALUES(:new.id, :new.name);
+    SELECT max(id) + 1 INTO next_id FROM insurers;
+    INSERT INTO insurers (id, name) VALUES(next_id, :new.name);
 END;
 
 -- Sarajevo delete trigger
