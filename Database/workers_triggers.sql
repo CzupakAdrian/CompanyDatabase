@@ -10,7 +10,7 @@ BEGIN
     SELECT name INTO location FROM locations_global WHERE id=:new.location_id;
     SELECT max(id) + 1 INTO next_id FROM workers_global;
     IF location = 'Tokyo' THEN -- zmienić warunki
-        INSERT INTO workers_global@tokyo_link (id, name, surname, birth_date, position_id, location_id, insurance_id) -- zmienić link i dodać inne
+        INSERT INTO workers@tokyo_link (id, name, surname, birth_date, position_id, location_id, insurance_id) -- zmienić link i dodać inne
         VALUES (next_id, :new.name, :new.surname, :new.birth_date, :new.position_id, :new.location_id, :new.insurance_id);
     ELSE
         SELECT max(id)+1 INTO next_id FROM workers;

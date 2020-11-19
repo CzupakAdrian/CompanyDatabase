@@ -20,3 +20,11 @@ BEGIN
     -- dopisać dla wszystkich linków
 END;
 
+CREATE OR REPLACE TRIGGER delete_position
+INSTEAD OF DELETE ON positions_global
+FOR EACH ROW
+BEGIN
+    DELETE FROM positions WHERE position = :old.position;
+    DELETE FROM positions@sarajevo_link WHERE position = :old.position;
+    -- dopisać dla wszystkich linków
+END;

@@ -1,4 +1,4 @@
-from main_window import Ui_MainWindow
+from ui.main_window import Ui_MainWindow
 
 
 class MainWindow(Ui_MainWindow):
@@ -10,9 +10,9 @@ class MainWindow(Ui_MainWindow):
         self.__connectSlots()
 
     def __connectSlots(self):
-        self.connect_btn.clicked.connect(self.__connect_btn_clicked)
+        self.show_all_workers_btn.clicked.connect(self.__show_all_workers_btn_clicked)
 
-    def __connect_btn_clicked(self):
+    def __show_all_workers_btn_clicked(self):
         pass
 
 

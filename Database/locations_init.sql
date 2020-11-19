@@ -3,5 +3,6 @@ CREATE TABLE locations (
     id INT NOT NULL PRIMARY KEY,
     name VARCHAR(20) NOT NULL
 );
-INSERT INTO locations VALUES(1, 'Tokyo'); -- wpisać nazwę miasta
+INSERT INTO locations VALUES(1, 'Sarajevo');
+INSERT INTO locations VALUES(2, 'Tokyo');
 ALTER TABLE locations READ ONLY;

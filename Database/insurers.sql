@@ -35,3 +35,17 @@ FOR EACH ROW
 BEGIN
     INSERT INTO insurers (id, name) VALUES(:new.id, :new.name);
 END;
+
+-- Sarajevo delete trigger
+CREATE OR REPLACE TRIGGER delete_insurers
+INSTEAD OF DELETE ON insurers_local
+BEGIN
+    DELETE FROM insurers@tokyo_link WHERE id = :old.id;
+END;
+
+-- Tokyo delete trigger
+CREATE OR REPLACE TRIGGER delete_insurers
+INSTEAD OF DELETE ON insurers_local
+BEGIN
+    DELETE FROM insurers WHERE id = :old.id;
+END;
