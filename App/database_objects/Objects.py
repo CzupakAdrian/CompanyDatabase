@@ -37,12 +37,14 @@ class WorkerPreference(Base):
     location = relationship('Location')
 
 
+# Read and write
 class Insurer(Base):
     __tablename__ = 'insurers_local'
     id = Column(Integer, primary_key=True)
     name = Column(String)
 
 
+# Read and write
 class GlobalWorker(Base):
     __tablename__ = 'workers_global'
     id = Column(Integer, primary_key=True)
@@ -63,6 +65,7 @@ class GlobalWorker(Base):
     insurance = relationship('GlobalInsurance')
 
 
+# Read and Write
 class GlobalPosition(Base):
     __tablename__ = 'positions_global'
     # id = Column(Integer, primary_key=True)
@@ -78,6 +81,7 @@ class GlobalWorkerPreference(Base):
     location = relationship('Location')
 
 
+# Read and write
 class GlobalInsurance(Base):
     __tablename__ = 'insurances_global'
     id = Column(Integer, primary_key=True)

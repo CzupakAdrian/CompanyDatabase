@@ -1,7 +1,7 @@
 -- widok do wyświetlania wszystkich preferences i wstawiania w odpowiednie miejsce
 CREATE view workers_preferences_global AS
 SELECT * FROM workers_preferences
-UNION
+UNION ALL
 SELECT * FROM workers_preferences@tokyo_link;
 
 -- fragmentacja pozioma workers preferences - INSERT
@@ -12,10 +12,10 @@ DECLARE
     location VARCHAR2(10);
     loc_id int;
     BEGIN
-        SELECT location_id INTO loc_id FROM workers WHERE id=:new.worker_id;
+        SELECT location_id INTO loc_id FROM workers_global WHERE id=:new.worker_id;
         SELECT name INTO location FROM locations WHERE id=loc_id;
-        IF location = 'tokyo' THEN
-            INSERT INTO workers_preferences@tokyo_link VALUES(:new.worker_id, :new.location_id);
+        IF location = 'Tokyo' THEN -- zmienić warunki
+            INSERT INTO workers_preferences@tokyo_link VALUES(:new.worker_id, :new.location_id); -- zmienić link
         ELSE
             INSERT INTO workers_preferences VALUES(:new.worker_id, :new.location_id);
         END IF;
@@ -31,8 +31,8 @@ DECLARE
     BEGIN
         SELECT location_id INTO loc_id FROM workers_global WHERE id = :old.worker_id;
         SELECT name INTO location FROM locations WHERE id=loc_id;
-        IF location = 'tokyo' THEN
-            DELETE FROM workers_preferences@tokyo_link WHERE worker_id = :old.worker_id;
+        IF location = 'Tokyo' THEN -- zmienić warunki
+            DELETE FROM workers_preferences@tokyo_link WHERE worker_id = :old.worker_id; -- zmienić link
         ELSE
             DELETE FROM workers_preferences WHERE worker_id = :old.worker_id;
         END IF;
@@ -48,8 +48,8 @@ DECLARE
     BEGIN
         SELECT location_id INTO loc_id FROM workers_global WHERE id = :old.worker_id;
         SELECT name INTO location FROM locations WHERE id=loc_id;
-        IF location = 'tokyo' THEN
-            UPDATE workers_preferences@tokyo_link SET worker_id=:new.worker_id, location_id=:new.location_id
+        IF location = 'Tokyo' THEN -- zmienić warunki
+            UPDATE workers_preferences@tokyo_link SET worker_id=:new.worker_id, location_id=:new.location_id -- zmienić link
             WHERE worker_id = :new.worker_id;
         ELSE
             UPDATE workers_preferences SET worker_id=:new.worker_id, location_id=:new.location_id

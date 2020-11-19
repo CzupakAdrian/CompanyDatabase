@@ -7,7 +7,7 @@ DECLARE
     location VARCHAR2(10);
     next_id int;
 BEGIN
-    SELECT name INTO location FROM locations_global WHERE id=:new.location_id;
+    SELECT name INTO location FROM locations WHERE id=:new.location_id;
     SELECT max(id) + 1 INTO next_id FROM workers_global;
     IF location = 'Tokyo' THEN -- zmienić warunki
         INSERT INTO workers@tokyo_link (id, name, surname, birth_date, position_id, location_id, insurance_id) -- zmienić link i dodać inne

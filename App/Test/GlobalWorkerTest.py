@@ -49,7 +49,7 @@ if __name__ == '__main__':
     testInstance.add_worker('Brianek', 'Patusinski', date(2000, 1, 1), 1, 2, 1)
     workers = testInstance.get_workers()
     print(convert_to_pd_dataframe(workers))
-    testInstance.delete_worker(2)
-    print(convert_to_pd_dataframe(workers))
+    # testInstance.delete_worker(2)
+    # print(convert_to_pd_dataframe(workers))
 
 

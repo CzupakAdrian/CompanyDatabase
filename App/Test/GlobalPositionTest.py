@@ -3,7 +3,7 @@ from database_objects.Objects import GlobalPosition
 import pandas as pd
 
 
-class PositionGLobalTest(DbConnection):
+class GlobalPositionTest(DbConnection):
     def __init__(self):
         super().__init__()
 
@@ -28,7 +28,7 @@ class PositionGLobalTest(DbConnection):
 
 
 if __name__ == '__main__':
-    testInstance = PositionGLobalTest()
+    testInstance = GlobalPositionTest()
     testInstance.add_position('Test')
     testInstance.getPositions()
     testInstance.delete_positon('Test')
