@@ -57,6 +57,3 @@ class DbConnectionAdrianSarajevo:
         self.engine = create_engine(self.ENGINE_PATH_WIN_AUTH, max_identifier_length=128)
         self.session = sessionmaker(bind=self.engine)()
         self.conn = self.session.bind
-
-
-DbConnection = DbConnectionAdrianTokyo
