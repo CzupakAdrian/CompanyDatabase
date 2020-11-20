@@ -1,6 +1,6 @@
 from datetime import date
 
-from orm_controllers.DbConnection import DbConnection
+from orm_controllers.DbConnection import DbConnectionAlbertSarajevo
 from database_objects.Objects import GlobalWorker
 import pandas as pd
 
@@ -13,9 +13,9 @@ def convert_to_pd_dataframe(workers):
 
 
 # Read only class
-class WorkerTest(DbConnection):
-    def __init__(self):
-        super().__init__()
+class WorkerTest:
+    def __init__(self, db_connection):
+        self.session = db_connection.get_session()
 
     def get_workers(self):
         workers = self.session.query(GlobalWorker).order_by(GlobalWorker.id)
@@ -27,7 +27,7 @@ class WorkerTest(DbConnection):
 
 
 if __name__ == '__main__':
-    testInstance = WorkerTest()
+    testInstance = WorkerTest(DbConnectionAlbertSarajevo())
     workers = testInstance.get_workers()
     print(convert_to_pd_dataframe(workers))
     worker = testInstance.get_worker(1)

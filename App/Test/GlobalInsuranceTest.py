@@ -1,4 +1,4 @@
-from orm_controllers.DbConnection import DbConnection
+from orm_controllers.DbConnection import DbConnectionAlbertSarajevo
 from database_objects.Objects import GlobalInsurance
 import pandas as pd
 import datetime
@@ -10,9 +10,10 @@ def generateRandomDate(startDate: datetime.date, endDate: datetime.date):
     return startDate + datetime.timedelta(days=random.randrange(timeBetween.days))
 
 
-class InsuranceGlobalTest(DbConnection):
-    def __init__(self):
-        super().__init__()
+class InsuranceGlobalTest:
+    def __init__(self, db_connection):
+        self.session = db_connection.get_session()
+        self.conn = db_connection.get_connection()
 
     def getInsuranceGlobals(self):
         insurances = self.session.query(GlobalInsurance).order_by(GlobalInsurance.id)
@@ -50,11 +51,12 @@ class InsuranceGlobalTest(DbConnection):
         self.session.delete(insurance)
         self.session.commit()
 
-#init insurances after init insurers
+
+# init insurances after init insurers
 if __name__ == '__main__':
-    testInstance = InsuranceGlobalTest()
+    testInstance = InsuranceGlobalTest(DbConnectionAlbertSarajevo())
     testInstance.getInsuranceGlobals()
-    testInstance.add_insurance(1, 1, datetime.date(2031, 1, 21))
-    testInstance.getInsuranceGlobals()
-    testInstance.delete_insurance(11)
-    testInstance.getInsuranceGlobals()
+    # testInstance.add_insurance(1, 1, datetime.date(2031, 1, 21))
+    # testInstance.getInsuranceGlobals()
+    # testInstance.delete_insurance(11)
+    # testInstance.getInsuranceGlobals()

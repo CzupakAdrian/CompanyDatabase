@@ -1,15 +1,16 @@
-from orm_controllers.DbConnection import DbConnection
+from orm_controllers.DbConnection import DbConnectionAlbertSarajevo
 from database_objects.Objects import GlobalPosition
 import pandas as pd
 
 
-class GlobalPositionTest(DbConnection):
-    def __init__(self):
-        super().__init__()
+class GlobalPositionTest:
+    def __init__(self, db_connection):
+        self.session = db_connection.get_session()
+        self.conn = db_connection.get_connection()
 
-    def getPositions(self):
+    def get_positions(self):
         positions = self.session.query(GlobalPosition).order_by(GlobalPosition.position)
-        print(pd.read_sql_query(positions.statement, con=self.conn))
+        return pd.read_sql_query(positions.statement, con=self.conn)
 
     # def deleteAllPositions(self):
     #     positions = self.session.query(Position).order_by(Position.id)
@@ -28,10 +29,10 @@ class GlobalPositionTest(DbConnection):
 
 
 if __name__ == '__main__':
-    testInstance = GlobalPositionTest()
-    testInstance.add_position('Test')
-    testInstance.getPositions()
-    testInstance.delete_position('Test')
-    testInstance.getPositions()
+    testInstance = GlobalPositionTest(DbConnectionAlbertSarajevo())
+    # testInstance.add_position('Test')
+    print(testInstance.get_positions())
+    # testInstance.delete_position('Test')
+    # print(testInstance.get_positions())
 
 

@@ -1,4 +1,4 @@
-from orm_controllers.DbConnection import DbConnection
+from orm_controllers.DbConnection import DbConnectionAlbertSarajevo
 from database_objects.Objects import GlobalWorkerPreference
 import pandas as pd
 
@@ -12,9 +12,9 @@ def convert_to_pd_dataframe(prefs):
                                                            'desired localization'])
 
 
-class GlobalWorkerPreferenceTest(DbConnection):
-    def __init__(self):
-        super().__init__()
+class GlobalWorkerPreferenceTest:
+    def __init__(self, db_connection):
+        self.session = db_connection.get_session()
 
     def get_preferences(self):
         prefs = self.session.query(GlobalWorkerPreference)#.order_by(GlobalWorkerPreference.worker_id)
@@ -34,7 +34,7 @@ class GlobalWorkerPreferenceTest(DbConnection):
 
 
 if __name__ == '__main__':
-    testInstance = GlobalWorkerPreferenceTest()
+    testInstance = GlobalWorkerPreferenceTest(DbConnectionAlbertSarajevo())
     # prefs = testInstance.get_preferences()
     # print(convert_to_pd_dataframe(prefs))
     # pref = testInstance.get_preference(1)
