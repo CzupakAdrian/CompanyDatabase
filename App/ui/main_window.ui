@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>861</width>
+    <height>526</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,40 +16,169 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
-     <layout class="QVBoxLayout" name="verticalLayout">
+     <layout class="QVBoxLayout" name="verticalLayout_5">
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <widget class="QPushButton" name="show_all_workers_btn">
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QPushButton" name="show_all_workers_btn">
+            <property name="text">
+             <string>Show all workers</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="show_local_workers_btn">
+            <property name="text">
+             <string>Show local workers</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QPushButton" name="show_worker_btn">
           <property name="text">
-           <string>Show all workers</string>
+           <string>Show worker</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="show_local_workers_btn">
-          <property name="text">
-           <string>Show local workers</string>
-          </property>
-         </widget>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QPushButton" name="add_worker_btn">
+            <property name="text">
+             <string>Add worker</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="delete_worker_btn">
+            <property name="text">
+             <string>Delete worker</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
        </layout>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
-         <widget class="QPushButton" name="show_all_preferences_btn">
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="QPushButton" name="show_all_preferences_btn">
+            <property name="text">
+             <string>Show all preferences</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="show_local_preferences_btn">
+            <property name="text">
+             <string>Show local preferences</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QPushButton" name="show_worker_preference_btn">
           <property name="text">
-           <string>Show all preferences</string>
+           <string>Show worker preference</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="show_local_preferences_btn">
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <item>
+           <widget class="QPushButton" name="delete_preference_btn">
+            <property name="text">
+             <string>Delete preference</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="add_preference_btn">
+            <property name="text">
+             <string>Add preference</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QPushButton" name="show_insurances_btn">
           <property name="text">
-           <string>Show local preferences</string>
+           <string>Show insurances</string>
           </property>
          </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <item>
+           <widget class="QPushButton" name="delete_insurance_btn">
+            <property name="text">
+             <string>Delete insurance</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="add_insurance_btn">
+            <property name="text">
+             <string>Add insurance</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+         <widget class="QPushButton" name="show_positions_btn">
+          <property name="text">
+           <string>Show posiotions</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_6">
+          <item>
+           <widget class="QPushButton" name="add_position_btn">
+            <property name="text">
+             <string>Add position</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="delete_position_btn">
+            <property name="text">
+             <string>Delete position</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </item>
@@ -59,19 +188,6 @@
          <string>Clear</string>
         </property>
        </widget>
-      </item>
-      <item>
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
       </item>
      </layout>
     </item>
@@ -85,7 +201,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>861</width>
      <height>26</height>
     </rect>
    </property>
