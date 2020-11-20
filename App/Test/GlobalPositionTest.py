@@ -21,7 +21,7 @@ class GlobalPositionTest(DbConnection):
         self.session.add(GlobalPosition(position=name))
         self.session.commit()
 
-    def delete_positon(self, name):
+    def delete_position(self, name):
         position = self.session.query(GlobalPosition).get(name)
         self.session.delete(position)
         self.session.commit()
@@ -31,7 +31,7 @@ if __name__ == '__main__':
     testInstance = GlobalPositionTest()
     testInstance.add_position('Test')
     testInstance.getPositions()
-    testInstance.delete_positon('Test')
+    testInstance.delete_position('Test')
     testInstance.getPositions()
 
 
