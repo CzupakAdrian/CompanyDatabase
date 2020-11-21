@@ -35,7 +35,7 @@ class InsuranceController(BaseController):
 
     def __generate_random(self, insurer_controller):
         return GlobalInsurance(id=self.max_id() + 1,
-                               insurer_id=int(random.uniform(1, max(i.id for i in insurer_controller.get_all()))),
+                               insurer_id=int(random.uniform(1, 1 + max(i.id for i in insurer_controller.get_all()))),
                                expiration_date=generate_random_date(datetime.date.fromisoformat("2021-01-01"),
                                                                     datetime.date.fromisoformat("2023-12-12")))
 

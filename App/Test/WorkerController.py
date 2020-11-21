@@ -11,7 +11,7 @@ import datetime
 import random
 
 
-def convert_to_pd_dataframe(workers):
+def convert_workers_to_pd_dataframe(workers):
     workers_list = [(worker.id, worker.name, worker.surname, worker.birth_date, worker.position.position,
                      worker.location.name, worker.insurance_id) for worker in workers]
     return pd.DataFrame(workers_list, columns=['id', 'name', 'surname', 'birth date', 'position', 'localization',
@@ -38,9 +38,9 @@ class WorkerController(BaseController):
                             surname=names.get_last_name(),
                             birth_date=generate_random_date(datetime.date.fromisoformat("1955-01-01"),
                                                             datetime.date.fromisoformat("2000-12-12")),
-                            position_id=int(random.uniform(1, max(i.id for i in self.query(Position)))),
-                            location_id=int(random.uniform(1, max(i.id for i in location_controller.get_all()))),
-                            insurance_id=int(random.uniform(1, max(i.id for i in insurance_controller.get_all()))))
+                            position_id=int(random.uniform(1, 1 + max(i.id for i in self.query(Position)))),
+                            location_id=int(random.uniform(1, 1 + max(i.id for i in location_controller.get_all()))),
+                            insurance_id=int(random.uniform(1, 1 + max(i.id for i in insurance_controller.get_all()))))
 
     def add_random(self, location_controller, insurance_controller):
         for i in range(1, 40):
@@ -54,6 +54,6 @@ class WorkerController(BaseController):
 if __name__ == '__main__':
     testInstance = WorkerController(DbConnectionAlbertSarajevo())
     workers = testInstance.get_all()
-    print(convert_to_pd_dataframe(workers))
+    print(convert_workers_to_pd_dataframe(workers))
     worker = testInstance.get_worker(1)
     print(worker.name)
