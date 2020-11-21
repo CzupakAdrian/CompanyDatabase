@@ -1,6 +1,11 @@
 from orm_controllers.DbConnection import DbConnectionAlbertSarajevo
 from database_objects.Objects import GlobalWorkerPreference
+from orm_controllers.BaseController import BaseController
+from Test.LocationController import convert_locations_to_pd_dataframe
+from Test.WorkerController import convert_workers_to_pd_dataframe
+from database_objects.Objects import Location, GlobalWorker
 import pandas as pd
+import random
 
 
 def convert_to_pd_dataframe(prefs):
@@ -12,20 +17,27 @@ def convert_to_pd_dataframe(prefs):
                                                            'desired localization'])
 
 
-class GlobalWorkerPreferenceTest:
+class GlobalWorkerPreferenceController(BaseController):
     def __init__(self, db_connection):
-        self.session = db_connection.get_session()
+        super().__init__(db_connection)
 
-    def get_preferences(self):
-        prefs = self.session.query(GlobalWorkerPreference)#.order_by(GlobalWorkerPreference.worker_id)
+    def get_all(self):
+        prefs = self.query(GlobalWorkerPreference)#.order_by(GlobalWorkerPreference.worker_id)
         return prefs
 
     def get_preference(self, worker_id):
-        return self.session.query(GlobalWorkerPreference).get(worker_id)
+        return self.query(GlobalWorkerPreference).get(worker_id)
 
     def add_preference(self, worker_id, location_id):
-        self.session.add(GlobalWorkerPreference(worker_id=worker_id, location_id=location_id))
-        self.session.commit()
+        self.add(GlobalWorkerPreference(worker_id=worker_id, location_id=location_id))
+        self.commit()
+
+    def add_random(self):
+        for i in range(1, 30):
+            self.add(GlobalWorkerPreference(
+                worker_id=int(random.choice(convert_workers_to_pd_dataframe(self.query(GlobalWorker)).id)),
+                location_id=int(random.choice(convert_locations_to_pd_dataframe(self.query(Location)).id))))
+        self.commit()
 
     # def delete_preference(self, worker_id, location_id):
     #     position = self.session.query(GlobalPosition).get(name)
@@ -34,7 +46,7 @@ class GlobalWorkerPreferenceTest:
 
 
 if __name__ == '__main__':
-    testInstance = GlobalWorkerPreferenceTest(DbConnectionAlbertSarajevo())
+    testInstance = GlobalWorkerPreferenceController(DbConnectionAlbertSarajevo())
     # prefs = testInstance.get_preferences()
     # print(convert_to_pd_dataframe(prefs))
     # pref = testInstance.get_preference(1)

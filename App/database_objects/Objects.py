@@ -43,6 +43,10 @@ class Insurer(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String)
 
+class Position(Base):
+    __tablename__ = 'positions'
+    id = Column(Integer, primary_key=True)
+    position = Column(String)
 
 # Read and write
 class GlobalWorker(Base):
@@ -54,11 +58,6 @@ class GlobalWorker(Base):
     position_id = Column(Integer, ForeignKey('positions.id'))
     location_id = Column(Integer, ForeignKey('locations.id'))
     insurance_id = Column(Integer, ForeignKey('insurances_global.id'))
-
-    class Position(Base):
-        __tablename__ = 'positions'
-        id = Column(Integer, primary_key=True)
-        position = Column(String)
 
     location = relationship('Location')
     position = relationship('Position')
