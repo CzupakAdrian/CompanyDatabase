@@ -40,7 +40,7 @@ def init_insurances(controller):
         print("insurances deleted for initialization")
         controller.insurances.add_insurance(1, 1, datetime.date.fromisoformat("2023-12-12"))
 
-    #controller.insurances.add_random(controller.insurers)
+    #controller.insurances.add_random()
     print("insurances initialized")
     return True
 
@@ -63,22 +63,20 @@ def init_positions(controller):
 
 def init_workers(controller):
     if not controller.workers.get_all():
-        print("workers table is empty: add one manually in one location")
-        return False
+       print("workers table is empty: add one manually in one location")
+       return False
 
     elif controller.workers.get_all().count() == 1:
-        controller.workers.add_random(controller.locations,
-                                      controller.insurances)
+        controller.workers.add_random()
         print("workers initialized")
     else:
-        print("workers already initialized")
+       print("workers already initialized")
     return True
 
 
 def init_preferences(controller):
     if controller.preferences.get_all().count() < 10:
-        controller.preferences.add_random(controller.locations,
-                                      controller.workers)
+        controller.preferences.add_random()
         print("preferences initialized")
     else:
         print("preferences already initialized")

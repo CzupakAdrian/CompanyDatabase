@@ -15,7 +15,6 @@ class TablesController():
         self.workers = WorkerController(connection)
         self.preferences = GlobalWorkerPreferenceController(connection)
 
-    # COMMENTED BECAUSE NOT INTEGRATED WITH NEW CONVENTION
     # def getAllGlobalInsurances(self):
     #     print(self.session.query(GlobalInsurance.id, GlobalInsurance.expiration_date, Insurer.name).
     #           filter(GlobalInsurance.insurer_id == Insurer.id).all())

@@ -2,6 +2,9 @@ from orm_controllers.BaseController import BaseController
 from database_objects.Objects import GlobalPosition
 import pandas as pd
 
+def convert_positions_to_pd_dataframe(positions):
+    positions_list = [(position.id, position.position) for position in positions]
+    return pd.DataFrame(positions_list, columns=['id', 'position'])
 
 class GlobalPositionController(BaseController):
     def __init__(self, controller):

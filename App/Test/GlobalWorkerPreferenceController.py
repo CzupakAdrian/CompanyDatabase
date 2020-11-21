@@ -1,6 +1,9 @@
 from orm_controllers.DbConnection import DbConnectionAlbertSarajevo
 from database_objects.Objects import GlobalWorkerPreference
 from orm_controllers.BaseController import BaseController
+from Test.LocationController import convert_locations_to_pd_dataframe
+from Test.WorkerController import convert_workers_to_pd_dataframe
+from database_objects.Objects import Location, GlobalWorker
 import pandas as pd
 import random
 
@@ -29,11 +32,11 @@ class GlobalWorkerPreferenceController(BaseController):
         self.add(GlobalWorkerPreference(worker_id=worker_id, location_id=location_id))
         self.commit()
 
-    def add_random(self, location_controller, workers_controller):
+    def add_random(self):
         for i in range(1, 30):
             self.add(GlobalWorkerPreference(
-                worker_id=int(random.uniform(1,max(i.id for i in workers_controller.get_all()))),
-                location_id=int(random.uniform(1, max(i.id for i in location_controller.get_all())))))
+                worker_id=int(random.choice(convert_workers_to_pd_dataframe(self.query(GlobalWorker)).id)),
+                location_id=int(random.choice(convert_locations_to_pd_dataframe(self.query(Location)).id))))
         self.commit()
 
     # def delete_preference(self, worker_id, location_id):

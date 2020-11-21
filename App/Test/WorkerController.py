@@ -1,9 +1,11 @@
 from datetime import date
 
-from orm_controllers.DbConnection import DbConnectionAlbertSarajevo
-from database_objects.Objects import GlobalWorker
-from database_objects.Objects import Position
+from orm_controllers.DbConnection import DbConnectionAdrianSarajevo
+from database_objects.Objects import GlobalWorker, Position, Location, GlobalInsurance
 from orm_controllers.BaseController import BaseController
+from Test.GlobalPositionController import convert_positions_to_pd_dataframe
+from Test.LocationController import convert_locations_to_pd_dataframe
+from Test.InsuranceController import convert_insurances_to_pd_dataframe
 import pandas as pd
 import names
 from Test.InsuranceController import generate_random_date
@@ -32,19 +34,19 @@ class WorkerController(BaseController):
         self.delete(insurer)
         self.commit()
 
-    def __generate_random(self, location_controller, insurance_controller):
+    def __generate_random(self):
         return GlobalWorker(id=2,
                             name=names.get_first_name(),
                             surname=names.get_last_name(),
                             birth_date=generate_random_date(datetime.date.fromisoformat("1955-01-01"),
                                                             datetime.date.fromisoformat("2000-12-12")),
-                            position_id=int(random.uniform(1, 1 + max(i.id for i in self.query(Position)))),
-                            location_id=int(random.uniform(1, 1 + max(i.id for i in location_controller.get_all()))),
-                            insurance_id=int(random.uniform(1, 1 + max(i.id for i in insurance_controller.get_all()))))
+                            position_id=int(random.choice(convert_positions_to_pd_dataframe(self.query(Position)).id)),
+                            location_id=int(random.choice(convert_locations_to_pd_dataframe(self.query(Location)).id)),
+                            insurance_id=int(random.choice(convert_insurances_to_pd_dataframe(self.query(GlobalInsurance)).id)))
 
-    def add_random(self, location_controller, insurance_controller):
+    def add_random(self):
         for i in range(1, 40):
-            self.add(self.__generate_random(location_controller, insurance_controller))
+            self.add(self.__generate_random())
         self.commit()
 
     def get_worker(self, worker_id):
@@ -52,7 +54,7 @@ class WorkerController(BaseController):
 
 
 if __name__ == '__main__':
-    testInstance = WorkerController(DbConnectionAlbertSarajevo())
+    testInstance = WorkerController(DbConnectionAdrianSarajevo())
     workers = testInstance.get_all()
     print(convert_workers_to_pd_dataframe(workers))
     worker = testInstance.get_worker(1)

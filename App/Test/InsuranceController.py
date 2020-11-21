@@ -10,6 +10,10 @@ def generate_random_date(startDate: datetime.date, endDate: datetime.date):
     return startDate + datetime.timedelta(days=random.randrange(timeBetween.days))
 
 
+def convert_insurances_to_pd_dataframe(insurances):
+    locations_list = [(insurance.id, insurance.expiration_date, insurance.insurer_id) for insurance in insurances]
+    return pd.DataFrame(locations_list, columns=['id', 'name', 'insurer_id'])
+
 class InsuranceController(BaseController):
     def __init__(self, connection):
         super().__init__(connection)
@@ -41,8 +45,8 @@ class InsuranceController(BaseController):
 
     def add_insurance(self, insurance_id, insurer_id, expiration_date: datetime.date):
         self.add(GlobalInsurance(id=insurance_id,
-                                         insurer_id=insurer_id,
-                                         expiration_date=expiration_date))
+                                 insurer_id=insurer_id,
+                                 expiration_date=expiration_date))
         self.commit()
 
     def delete_insurance(self, insurance_id):
