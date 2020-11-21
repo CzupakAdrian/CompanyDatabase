@@ -54,5 +54,5 @@ if __name__ == '__main__':
     # testInstance.add_preference(2, 2)
 
     # Cuts all duplicates
-    prefs = testInstance.get_preferences()
-    print(convert_to_pd_dataframe(prefs))
+    prefs = testInstance.get_preference(41)
+    print(prefs.worker.name)
