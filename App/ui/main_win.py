@@ -1,9 +1,11 @@
+from Test.TablesController import TablesController
 from ui.main_window import Ui_MainWindow
 
 
 class MainWindow(Ui_MainWindow):
-    def __init__(self):
+    def __init__(self, db_connection):
         super(MainWindow, self).__init__()
+        self.__tc = TablesController(db_connection)
 
     def setupUi(self, mainWindow):
         super().setupUi(mainWindow)
@@ -29,7 +31,11 @@ class MainWindow(Ui_MainWindow):
         self.clear_btn.clicked.connect(self.__clear_btn_clicked)
 
     def __show_all_workers_btn_clicked(self):
-        pass
+        self.textEdit.clear()
+        workers = self.__tc.workers.get_all()
+        from Test.WorkerController import convert_workers_to_pd_dataframe
+        workers = convert_workers_to_pd_dataframe(workers)
+        self.textEdit.append(workers.to_string())
 
     def __show_local_workers_btn_clicked(self):
         pass
@@ -59,7 +65,11 @@ class MainWindow(Ui_MainWindow):
         pass
 
     def __show_insurances_btn_clicked(self):
-        pass
+        self.textEdit.clear()
+        insurances = self.__tc.insurances.get_all()
+        from Test.InsuranceController import convert_insurances_to_pd_dataframe
+        insurances = convert_insurances_to_pd_dataframe(insurances).to_string()
+        self.textEdit.append(insurances)
 
     def __delete_insurance_btn_clicked(self):
         pass
@@ -68,7 +78,11 @@ class MainWindow(Ui_MainWindow):
         pass
 
     def __show_positions_btn_clicked(self):
-        pass
+        self.textEdit.clear()
+        positions = self.__tc.positions.get_all()
+        from Test.GlobalPositionController import convert_positions_to_pd_dataframe
+        positions = convert_positions_to_pd_dataframe(positions).to_string()
+        self.textEdit.append(positions)
 
     def __add_position_btn_clicked(self):
         pass
@@ -77,6 +91,6 @@ class MainWindow(Ui_MainWindow):
         pass
 
     def __clear_btn_clicked(self):
-        pass
+        self.textEdit.clear()
 
 

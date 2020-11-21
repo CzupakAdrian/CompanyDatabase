@@ -11,8 +11,8 @@ def generate_random_date(startDate: datetime.date, endDate: datetime.date):
 
 
 def convert_insurances_to_pd_dataframe(insurances):
-    locations_list = [(insurance.id, insurance.expiration_date, insurance.insurer_id) for insurance in insurances]
-    return pd.DataFrame(locations_list, columns=['id', 'name', 'insurer_id'])
+    locations_list = [(insurance.id, insurance.expiration_date, insurance.insurer.name) for insurance in insurances]
+    return pd.DataFrame(locations_list, columns=['id', 'name', 'insurer'])
 
 class InsuranceController(BaseController):
     def __init__(self, connection):
