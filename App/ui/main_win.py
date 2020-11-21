@@ -42,17 +42,10 @@ class MainWindow(Ui_MainWindow):
         workers = convert_workers_to_pd_dataframe(workers)
         self.textEdit.append(workers.to_string())
 
-    def __show_local_workers_btn_clicked(self):
-        pass
-
     def __show_worker_btn_clicked(self):
         self.textEdit.clear()
-        dialog = QtWidgets.QDialog()
         from ui.sh_worker import ShowWorkerDialog
-        ui = ShowWorkerDialog()
-        ui.setupUi(dialog)
-        dialog.show()
-        id = dialog.exec_()
+        id = self.run_dialog_id(ShowWorkerDialog())
         if id > 0:
             try:
                 worker = self.__tc.workers.get_worker(id)
@@ -62,36 +55,19 @@ class MainWindow(Ui_MainWindow):
             except:
                 self.textEdit.append('Wrong id')
 
-    def __add_worker_btn_clicked(self):
-        pass
-
     def __delete_worker_btn_clicked(self):
-        dialog = QtWidgets.QDialog()
         from ui.del_worker import DelWorkerDialog
-        ui = DelWorkerDialog()
-        ui.setupUi(dialog)
-        dialog.show()
-        id = dialog.exec_()
+        id = self.run_dialog_id(DelWorkerDialog())
         if id > 0:
             try:
                 self.__tc.workers.delete_worker(id)
             except:
                 self.textEdit.append('Wrong id')
 
-    def __show_all_preferences_btn_clicked(self):
-        pass
-
-    def __show_local_preferences_btn_clicked(self):
-        pass
-
     def __show_worker_preference_btn_clicked(self):
         self.textEdit.clear()
-        dialog = QtWidgets.QDialog()
         from ui.sh_worker import ShowWorkerDialog
-        ui = ShowWorkerDialog()
-        ui.setupUi(dialog)
-        dialog.show()
-        id = dialog.exec_()
+        id = self.run_dialog_id(ShowWorkerDialog())
         if id > 0:
             try:
                 preference = self.__tc.preferences.get_preference(id)
@@ -102,12 +78,6 @@ class MainWindow(Ui_MainWindow):
             except:
                 self.textEdit.append('Wrong id')
 
-    def __delete_preference_btn_clicked(self):
-        pass
-
-    def __add_preference_btn_clicked(self):
-        pass
-
     def __show_insurances_btn_clicked(self):
         self.textEdit.clear()
         insurances = self.__tc.insurances.get_all()
@@ -116,10 +86,13 @@ class MainWindow(Ui_MainWindow):
         self.textEdit.append(insurances)
 
     def __delete_insurance_btn_clicked(self):
-        pass
-
-    def __add_insurance_btn_clicked(self):
-        pass
+        from ui.del_insurance import DelInsuranceDialog
+        id = self.run_dialog_id(DelInsuranceDialog())
+        if id > 0:
+            try:
+                self.__tc.insurances.delete_insurance(id)
+            except:
+                self.textEdit.append('Wrong id')
 
     def __show_insurers_btn_clicked(self):
         self.textEdit.clear()
@@ -129,10 +102,18 @@ class MainWindow(Ui_MainWindow):
         self.textEdit.append(insurers)
 
     def __add_insurer_btn_clicked(self):
-        pass
+        from ui.add_insurerr import AddInsurerDialog
+        ui = AddInsurerDialog(self.__tc.insurers)
+        self.run_dialog(ui)
 
     def __delete_insurer_btn_clicked(self):
-        pass
+        from ui.del_insurer import DelInsurerDialog
+        id = self.run_dialog_id(DelInsurerDialog())
+        if id > 0:
+            try:
+                self.__tc.insurers.delete_insurer(id)
+            except:
+                self.textEdit.append('Wrong id')
 
     def __show_positions_btn_clicked(self):
         self.textEdit.clear()
@@ -142,12 +123,50 @@ class MainWindow(Ui_MainWindow):
         self.textEdit.append(positions)
 
     def __add_position_btn_clicked(self):
-        pass
+        from ui.add_pos import AddPositionDialog
+        ui = AddPositionDialog(self.__tc.positions)
+        self.run_dialog(ui)
 
     def __delete_position_btn_clicked(self):
+        from ui.del_position import DelPositionDialog
+        ui = DelPositionDialog(self.__tc.positions)
+        self.run_dialog(ui)
+
+    def __delete_preference_btn_clicked(self):
+        pass
+
+    def __add_preference_btn_clicked(self):
+        pass
+
+    def __show_all_preferences_btn_clicked(self):
+        pass
+
+    def __show_local_preferences_btn_clicked(self):
+        pass
+
+    def __add_worker_btn_clicked(self):
+        pass
+
+    def __show_local_workers_btn_clicked(self):
+        pass
+
+    def __add_insurance_btn_clicked(self):
         pass
 
     def __clear_btn_clicked(self):
         self.textEdit.clear()
+
+    def run_dialog_id(self, ui):
+        dialog = QtWidgets.QDialog()
+        ui.setupUi(dialog)
+        dialog.show()
+        id = dialog.exec_()
+        return id
+
+    def run_dialog(self, ui):
+        dialog = QtWidgets.QDialog()
+        ui.setupUi(dialog)
+        dialog.show()
+        dialog.exec_()
 
 
