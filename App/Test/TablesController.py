@@ -1,12 +1,19 @@
-from orm_controllers import InsurerController, LocationController
-from database_objects.Objects import Insurer, GlobalInsurance, Worker, Location, GlobalPosition, GlobalWorkerPreference
+from Test.InsurerController import InsurerController
+from Test.InsuranceController import InsuranceController
+from Test.LocationController import LocationController
+from Test.GlobalPositionController import GlobalPositionController
+from Test.WorkerController import WorkerController
+from Test.GlobalWorkerPreferenceController import GlobalWorkerPreferenceController
 
-
-class TablesController:
+class TablesController():
     def __init__(self, connection):
         self.connection = connection
-        self.insurers = InsurerController.InsurerController(connection)
-        self.locations = LocationController.LocationController(connection)
+        self.insurers = InsurerController(connection)
+        self.locations = LocationController(connection)
+        self.insurances = InsuranceController(connection)
+        self.positions = GlobalPositionController(connection)
+        self.workers = WorkerController(connection)
+        self.preferences = GlobalWorkerPreferenceController(connection)
 
     # COMMENTED BECAUSE NOT INTEGRATED WITH NEW CONVENTION
     # def getAllGlobalInsurances(self):

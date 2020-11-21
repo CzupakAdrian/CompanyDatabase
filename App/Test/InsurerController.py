@@ -10,8 +10,6 @@ class InsurerController(BaseController):
 
     def get_all(self):
         return self.query(Insurer).order_by(Insurer.id)
-        #returning query, cuz boolean conversion
-        #   can be interpreted outside like pd.read_sql_query(get_all())
         #return pd.read_sql_query(insurers.statement, con=self.conn, index_col='id')
 
     def delete_all(self):

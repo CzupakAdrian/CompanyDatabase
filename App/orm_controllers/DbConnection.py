@@ -16,7 +16,7 @@ class DbConnection:
         self.ENGINE_PATH_WIN_AUTH = self.DIALECT + '+' + self.SQL_DRIVER + '://' + self.USERNAME + ':' + self.PASSWORD \
                                     + '@' + self.HOST + ':' + str(self.PORT) + '/?service_name=' + self.SERVICE
         self.engine = create_engine(self.ENGINE_PATH_WIN_AUTH, max_identifier_length=128)
-        self.session = sessionmaker(bind=self.engine)()
+        self.session = sessionmaker(bind=self.engine, autoflush=False)()
         self.conn = self.session.bind
 
     def get_session(self):

@@ -1,5 +1,5 @@
 from database_objects.Objects import Location
-from orm_controllers import BaseController
+from orm_controllers.BaseController import BaseController
 import pandas as pd
 
 
@@ -9,9 +9,8 @@ class LocationController(BaseController):
         super().__init__(connection)
 
     def get_all(self):
-        return self.session.query(Location)
-        # the same as in insurers
-        # return pd.read_sql_query(locations.statement, con=self.conn, index_col='id')
+        return self.query(Location)
+        #return pd.read_sql_query(locations.statement, con=self.conn, index_col='id')
 
 
 
