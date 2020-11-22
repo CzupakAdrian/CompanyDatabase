@@ -58,4 +58,3 @@ class DbConnectionAdrianSarajevo(DbConnection):
         self.PASSWORD = 'Master'  # enter your password
         self.PORT = 1522  # enter the oracle port number
         self.establish_connection()
-

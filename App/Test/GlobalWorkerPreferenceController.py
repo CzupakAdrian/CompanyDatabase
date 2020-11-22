@@ -8,7 +8,7 @@ import pandas as pd
 import random
 
 
-def convert_preferences_to_pd_dataframe(prefs):
+def convert_to_pd_dataframe(prefs):
     workers_preferences_list = [(preference.worker_id, preference.worker.name, preference.worker.surname,
                                  preference.worker.position.position, preference.worker.location.name,
                                  preference.location.name) for preference in prefs]
@@ -54,5 +54,5 @@ if __name__ == '__main__':
     # testInstance.add_preference(2, 2)
 
     # Cuts all duplicates
-    prefs = testInstance.get_all()
-    print(convert_preferences_to_pd_dataframe(prefs))
+    prefs = testInstance.get_preference(41)
+    print(prefs.worker.name)

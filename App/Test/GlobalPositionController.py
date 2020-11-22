@@ -2,9 +2,12 @@ from orm_controllers.BaseController import BaseController
 from database_objects.Objects import GlobalPosition
 import pandas as pd
 
+from orm_controllers.DbConnection import DbConnectionAlbertSarajevo
+
+
 def convert_positions_to_pd_dataframe(positions):
-    positions_list = [(position.id, position.position) for position in positions]
-    return pd.DataFrame(positions_list, columns=['id', 'position'])
+    positions_list = [position.position for position in positions]
+    return pd.DataFrame(positions_list, columns=['position'])
 
 class GlobalPositionController(BaseController):
     def __init__(self, controller):
@@ -31,8 +34,9 @@ class GlobalPositionController(BaseController):
 
 
 if __name__ == '__main__':
-    testInstance = GlobalPositionController()
-    testInstance.add_position('Test')
-    testInstance.getPositions()
-    testInstance.delete_position('Test')
-    testInstance.getPositions()
+    testInstance = GlobalPositionController(DbConnectionAlbertSarajevo())
+    # testInstance.add_position('Test')
+    positions = convert_positions_to_pd_dataframe(testInstance.get_all())
+    print(positions.to_string())
+    # testInstance.delete_position('Test')
+    # testInstance.getPositions()

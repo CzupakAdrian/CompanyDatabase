@@ -2,6 +2,12 @@
 from orm_controllers.BaseController import BaseController
 from database_objects.Objects import Insurer
 import pandas as pd
+from orm_controllers.DbConnection import DbConnectionAlbertSarajevo
+
+
+def convert_insurers_to_pd_dataframe(insurers):
+    insurers_list = [(insurer.id, insurer.name) for insurer in insurers]
+    return pd.DataFrame(insurers_list, columns=['id', 'name'])
 
 
 class InsurerController(BaseController):
@@ -10,7 +16,6 @@ class InsurerController(BaseController):
 
     def get_all(self):
         return self.query(Insurer).order_by(Insurer.id)
-        #return pd.read_sql_query(insurers.statement, con=self.conn, index_col='id')
 
     def delete_all(self):
         insurers = self.query(Insurer).order_by(Insurer.id)
@@ -39,7 +44,8 @@ class InsurerController(BaseController):
         self.commit()
 
 
-# if __name__ == '__main__':
+if __name__ == '__main__':
+    pass
 #     def wait_for_refresh(seconds):
 #         print(f'Waiting {seconds}s for refresh ', end='')
 #         for i in range(seconds + 1):
@@ -53,5 +59,7 @@ class InsurerController(BaseController):
 #     testInstance.delete_insurer(12)
 #     wait_for_refresh(40)
 #     testInstance.getInsurers()
+    ic = InsurerController(DbConnectionAlbertSarajevo())
+    print(convert_insurers_to_pd_dataframe(ic.get_all()))
 
 

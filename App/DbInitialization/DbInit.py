@@ -26,10 +26,10 @@ def init_insurers(controller):
 
 def init_locations(controller):
     if not controller.locations.get_all():
-        print("basic locations not added")
+        print("basic insurers not added")
         return False
     else:
-        print("locations already initialized")
+        print("insurers already initialized")
         return True
 
 

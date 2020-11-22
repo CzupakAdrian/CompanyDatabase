@@ -22,7 +22,6 @@ class WorkerPreferenceTest:
     def get_preferences(self):
         prefs = self.session.query(WorkerPreference).order_by(WorkerPreference.worker_id)
         return prefs
-        # print(pd.read_sql_query(prefs.statement, con=self.conn, index_col='id'))
 
     def get_preference(self, worker_id):
         return self.session.query(WorkerPreference).get(worker_id)
