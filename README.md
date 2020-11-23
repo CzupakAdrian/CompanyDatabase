@@ -10,5 +10,9 @@ FLOW:
 5. insurers.sql - odpalić wg komentarza
 6. workers_init.sql - odapalić na każdym serwerze (najpierw dopisać linki)
 7. workers_triggers.sql - odpalić na każdym serwerze każdy trigger oddzielnie (najpierw dopisać linki i pozmieniać warunki)
-8. <to co ty wysłałeś - preferences i relations>
-9. insurances.sql - odpalić na każdym serwerze stosowną część (opis wewnątrz)
+8. relations - na każdym serwerze
+9. workers_preferences.sql - na każdym serwerze
+10. insurances.sql - odpalić na każdym serwerze stosowną część (opis wewnątrz)
+
+11. Odpalić DbInit.py na jednym z serwerów w celu wstawienia
+losowych danych (w razie potrzeby zakomentować niepotrzebne assercje)
