@@ -1,4 +1,8 @@
-repo wymiany sql do bazy danych
+Rozproszona baza danych
+
+W folderze Database/ znajdują się pliki sql służące do postawienia bazy danych.
+W folderze App/ zandjuje się projekt aplikacji python.
+Poniżej przedstawiono sposób postępowania w celu bezawaryjnej generacji bazy danych.
 
 FLOW:
 
