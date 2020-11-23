@@ -1,6 +1,6 @@
 from datetime import date
 
-from orm_controllers.DbConnection import DbConnectionAlbertSarajevo
+from orm_controllers.DbConnection import DbConnectionAlbertSarajevo, DbConnectionAdrianSarajevo
 from database_objects.Objects import GlobalWorker
 import pandas as pd
 
@@ -31,8 +31,8 @@ class GlobalWorkerTest:
         return self.session.query(GlobalWorker).get(worker_id)
 
     def add_worker(self, name, surname, birth_date, position_id, location_id, insurance_id):
-        AUTOGENERATE = 0
-        self.session.add(GlobalWorker(id=AUTOGENERATE, name=name, surname=surname, birth_date=birth_date,
+        print("started")
+        self.session.add(GlobalWorker(id=1, name=name, surname=surname, birth_date=birth_date,
                                       position_id=position_id, location_id=location_id, insurance_id=insurance_id))
         self.session.commit()
 
@@ -43,9 +43,10 @@ class GlobalWorkerTest:
 
 
 if __name__ == '__main__':
-    testInstance = GlobalWorkerTest(DbConnectionAlbertSarajevo())
+    testInstance = GlobalWorkerTest(DbConnectionAdrianSarajevo())
     workers = testInstance.get_workers()
     print(convert_to_pd_dataframe(workers))
+    testInstance.add_worker("A","C",date(2000,1,1),3,1,7)
     # testInstance.add_worker('Brianek', 'Patusinski', date(2000, 1, 1), 1, 2, 1)
     # workers = testInstance.get_workers()
     # print(convert_to_pd_dataframe(workers))

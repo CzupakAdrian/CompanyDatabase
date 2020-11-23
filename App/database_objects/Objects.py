@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String, Date, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
+from sqlalchemy import PrimaryKeyConstraint
 
 Base = declarative_base()
 
@@ -73,7 +74,10 @@ class GlobalPosition(Base):
 
 class GlobalWorkerPreference(Base):
     __tablename__ = 'workers_preferences_global'
-    worker_id = Column(Integer, ForeignKey('workers_global.id'), primary_key=True)
+    __table_args__ = (
+        PrimaryKeyConstraint('worker_id', 'location_id'),
+    )
+    worker_id = Column(Integer, ForeignKey('workers_global.id'))
     location_id = Column(Integer, ForeignKey('locations.id'))
 
     worker = relationship('GlobalWorker')

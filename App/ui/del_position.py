@@ -16,7 +16,10 @@ class DelPositionDialog(Ui_Dialog):
 
     def __accept_btn_clicked(self):
         name = self.position_edit.text()
-        self.__positions_controller.delete_position(name)
+        try:
+            self.__positions_controller.delete_position(name)
+        except:
+            self.__positions_controller.session.rollback()
 
 
 

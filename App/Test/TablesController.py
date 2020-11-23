@@ -4,8 +4,11 @@ from Test.LocationController import LocationController
 from Test.GlobalPositionController import GlobalPositionController
 from Test.WorkerController import WorkerController, convert_workers_to_pd_dataframe
 from Test.GlobalWorkerPreferenceController import GlobalWorkerPreferenceController
+from Test.LocalWorkerController import LocalWorkerController
+from Test.WorkerPreferenceController import WorkerPreferenceController
 from database_objects.Objects import GlobalWorkerPreference, GlobalWorker, Location
 from orm_controllers.DbConnection import DbConnectionAdrianSarajevo
+from sqlalchemy.sql import and_
 import pandas as pd
 import datetime
 
@@ -20,24 +23,26 @@ class TablesController():
         self.positions = GlobalPositionController(connection)
         self.workers = WorkerController(connection)
         self.preferences = GlobalWorkerPreferenceController(connection)
-    # DO OGARNIĘCIA JESZCZE
+        self.local_workers = LocalWorkerController(connection)
+        self.local_preferences = WorkerPreferenceController(connection)
+
+    # # DO OGARNIĘCIA JESZCZE
     # def get_possible_exchanges(self):
     #     exchange_possibilities = list()
     #     workers = self.query(GlobalWorker).filter(
-    #         GlobalWorker.id == GlobalWorkerPreference.worker_id)
+    #         GlobalWorker.id == GlobalWorkerPreference.worker_id).execute()
     #     for wor in workers:
     #         exchange_possibilities.append(self.getPropsFor(wor))
     #     return exchange_possibilities
     #
     #
     # def getPropsFor(self, worker):
-    #     workers = self.query(GlobalWorker.name,
-    #                          GlobalWorker.surname,
-    #                          Location.name).\
-    #         filter(GlobalWorker.position_id == worker.position_id).\
-    #         filter(GlobalWorker.id == GlobalWorkerPreference.worker_id).\
-    #         filter(GlobalWorkerPreference.location_id == worker.location_id).\
-    #         filter(Location.id == GlobalWorker.location_id)
+    #     print()
+    #     workers = self.query(GlobalWorker,
+    #                          GlobalWorkerPreference).\
+    #         filter(and_(GlobalWorker.position_id == worker.position_id,\
+    #         GlobalWorker.id == GlobalWorkerPreference.worker_id,\
+    #         GlobalWorkerPreference.location_id == worker.location_id))
     #     workers_list = [(worker.name,
     #                      worker.surname,
     #                      worker.location.name,
@@ -70,10 +75,10 @@ class TablesController():
 
 if __name__ == '__main__':
     testInstance = TablesController(DbConnectionAdrianSarajevo())
-    # print(testInstance.getPropsFor(GlobalWorker(id=126,
-    #                                             name='Cindy',
-    #                                             surname='Bennet',
-    #                                             position_id=4,
-    #                                             location_id=2
-    #                                             )))
+    print(testInstance.getPropsFor(GlobalWorker(id=126,
+                                                name='Cindy',
+                                                surname='Bennet',
+                                                position_id=4,
+                                                location_id=2
+                                                )))
     # print(testInstance.get_possible_exchanges())

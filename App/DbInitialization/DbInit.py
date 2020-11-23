@@ -75,7 +75,7 @@ def init_workers(controller):
 
 
 def init_preferences(controller):
-    if controller.preferences.get_all().count() < 10:
+    if controller.preferences.get_all().count() < 40:
         controller.preferences.add_random()
         print("preferences initialized")
     else:
@@ -85,9 +85,9 @@ def init_preferences(controller):
 
 if __name__ == "__main__":
     controller = TablesController(DbConnectionAdrianSarajevo())
-    assert init_insurers(controller)
-    assert init_locations(controller)
-    assert init_insurances(controller)
-    assert init_positions(controller)
-    assert init_workers(controller)
+    # assert init_insurers(controller)
+    # assert init_locations(controller)
+    # assert init_insurances(controller)
+    # assert init_positions(controller)
+    # assert init_workers(controller)
     assert init_preferences(controller)

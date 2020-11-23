@@ -1,7 +1,6 @@
-from datetime import date
-
-from orm_controllers.DbConnection import DbConnectionAlbertSarajevo
+from orm_controllers.DbConnection import DbConnectionAlbertSarajevo, DbConnectionAdrianSarajevo
 from database_objects.Objects import WorkerPreference
+from orm_controllers.BaseController import BaseController
 import pandas as pd
 
 
@@ -15,19 +14,19 @@ def convert_to_pd_dataframe(prefs):
 
 
 # Read only class
-class WorkerPreferenceTest:
+class WorkerPreferenceController(BaseController):
     def __init__(self, db_connection):
-        self.session = db_connection.get_session()
+        super().__init__(db_connection)
 
     def get_preferences(self):
-        prefs = self.session.query(WorkerPreference).order_by(WorkerPreference.worker_id)
+        prefs = self.query(WorkerPreference).order_by(WorkerPreference.worker_id)
         return prefs
 
     def get_preference(self, worker_id):
-        return self.session.query(WorkerPreference).get(worker_id)
+        return self.query(WorkerPreference).get(worker_id)
 
 
 if __name__ == '__main__':
-    testInstance = WorkerPreferenceTest(DbConnectionAlbertSarajevo())
+    testInstance = WorkerPreferenceController(DbConnectionAdrianSarajevo())
     preferences = testInstance.get_preferences()
     print(convert_to_pd_dataframe(preferences))

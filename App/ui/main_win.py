@@ -1,11 +1,7 @@
 from PyQt5 import QtWidgets
 
-from Test.TablesController import TablesController
 from ui.main_window import Ui_MainWindow
-from orm_controllers.DbConnection import DbConnectionAdrianSarajevo
 from Test.TablesController import TablesController
-from Test.WorkerController import convert_workers_to_pd_dataframe
-from Test.GlobalWorkerPreferenceController import convert_to_pd_dataframe
 
 class MainWindow(Ui_MainWindow):
     def __init__(self, db_connection):
@@ -74,10 +70,13 @@ class MainWindow(Ui_MainWindow):
         if id > 0:
             try:
                 preference = self.__tc.preferences.get_preference(id)
-                self.textEdit.append(
-                    f'Name: {preference.worker.name}, Surname:{preference.worker.surname}, Current location: '
-                    f'{preference.worker.location.name}, '
-                    f'Position: {preference.worker.position.position}, Desired location: {preference.location.name}')
+                # self.textEdit.append(
+                #     f'Name: {preference.worker.name}, Surname:{preference.worker.surname}, Current location: '
+                #     f'{preference.worker.location.name}, '
+                #     f'Position: {preference.worker.position.position}, Desired location: {preference.location.name}')
+
+                from Test.GlobalWorkerPreferenceController import convert_to_pd_dataframe
+                self.textEdit.setText(convert_to_pd_dataframe(preference).to_string())
             except:
                 self.textEdit.append('Wrong id')
 
@@ -95,7 +94,8 @@ class MainWindow(Ui_MainWindow):
             try:
                 self.__tc.insurances.delete_insurance(id)
             except:
-                self.textEdit.append('Wrong id')
+                self.__tc.connection.session.rollback()
+                self.textEdit.setText('Wrong id')
 
     def __show_insurers_btn_clicked(self):
         self.textEdit.clear()
@@ -116,6 +116,7 @@ class MainWindow(Ui_MainWindow):
             try:
                 self.__tc.insurers.delete_insurer(id)
             except:
+                self.__tc.connection.session.rollback()
                 self.textEdit.append('Wrong id')
 
     def __show_positions_btn_clicked(self):
@@ -136,25 +137,47 @@ class MainWindow(Ui_MainWindow):
         self.run_dialog(ui)
 
     def __delete_preference_btn_clicked(self):
-        pass
+        from ui.del_preference import DelPreferenceDialog
+        id = self.run_dialog_id(DelPreferenceDialog())
+        if id > 0:
+            try:
+                self.__tc.preferences.delete_preference(id)
+            except:
+                self.__tc.connection.session.rollback()
+                self.textEdit.append('Wrong id')
 
     def __add_preference_btn_clicked(self):
-        pass
+        from ui.add_pref import AddPreferenceDialog
+        ui = AddPreferenceDialog(self.__tc.preferences)
+        self.run_dialog(ui)
 
     def __show_all_preferences_btn_clicked(self):
-        pass
+        self.textEdit.clear()
+        preferences = self.__tc.preferences.get_all()
+        from Test.GlobalWorkerPreferenceController import convert_to_pd_dataframe
+        preferences = convert_to_pd_dataframe(preferences)
+        self.textEdit.append(preferences.to_string())
 
     def __show_local_preferences_btn_clicked(self):
-        pass
+        from Test.WorkerPreferenceController import convert_to_pd_dataframe
+        self.textEdit.setText(convert_to_pd_dataframe(self.__tc.local_preferences.get_preferences()).to_string())
 
     def __add_worker_btn_clicked(self):
-        pass
+        from ui.add_work import AddWorkerDialog
+        ui = AddWorkerDialog(self.__tc.workers)
+        self.run_dialog(ui)
 
     def __show_local_workers_btn_clicked(self):
-        pass
+        self.textEdit.clear()
+        workers = self.__tc.local_workers.get_all()
+        from Test.WorkerController import convert_workers_to_pd_dataframe
+        workers = convert_workers_to_pd_dataframe(workers)
+        self.textEdit.append(workers.to_string())
 
     def __add_insurance_btn_clicked(self):
-        pass
+        from ui.add_ins import AddInsuranceDialog
+        ui = AddInsuranceDialog(self.__tc.insurances)
+        self.run_dialog(ui)
 
     def __clear_btn_clicked(self):
         self.textEdit.clear()

@@ -1,11 +1,13 @@
-from orm_controllers.DbConnection import DbConnectionAlbertSarajevo
+from orm_controllers.DbConnection import DbConnectionAlbertSarajevo, DbConnectionAdrianSarajevo
 from database_objects.Objects import GlobalWorkerPreference
 from orm_controllers.BaseController import BaseController
 from Test.LocationController import convert_locations_to_pd_dataframe
 from Test.WorkerController import convert_workers_to_pd_dataframe
 from database_objects.Objects import Location, GlobalWorker
+from sqlalchemy.sql.expression import delete
 import pandas as pd
 import random
+from sqlalchemy import and_
 
 
 def convert_to_pd_dataframe(prefs):
@@ -26,7 +28,7 @@ class GlobalWorkerPreferenceController(BaseController):
         return prefs
 
     def get_preference(self, worker_id):
-        return self.query(GlobalWorkerPreference).get(worker_id)
+        return self.query(GlobalWorkerPreference).filter(GlobalWorkerPreference.worker_id == worker_id)
 
     def add_preference(self, worker_id, location_id):
         self.add(GlobalWorkerPreference(worker_id=worker_id, location_id=location_id))
@@ -39,14 +41,15 @@ class GlobalWorkerPreferenceController(BaseController):
                 location_id=int(random.choice(convert_locations_to_pd_dataframe(self.query(Location)).id))))
         self.commit()
 
-    # def delete_preference(self, worker_id, location_id):
-    #     position = self.session.query(GlobalPosition).get(name)
-    #     self.session.delete(position)
-    #     self.session.commit()
+    def delete_preference(self, worker_id):
+        preference = self.query(GlobalWorkerPreference).\
+            filter(GlobalWorkerPreference.worker_id == worker_id)
+        preference.delete()
+        self.commit()
 
 
 if __name__ == '__main__':
-    testInstance = GlobalWorkerPreferenceController(DbConnectionAlbertSarajevo())
+    testInstance = GlobalWorkerPreferenceController(DbConnectionAdrianSarajevo())
     # prefs = testInstance.get_preferences()
     # print(convert_to_pd_dataframe(prefs))
     # pref = testInstance.get_preference(1)
@@ -54,5 +57,7 @@ if __name__ == '__main__':
     # testInstance.add_preference(2, 2)
 
     # Cuts all duplicates
-    prefs = testInstance.get_preference(41)
-    print(prefs.worker.name)
+    #prefs = testInstance.get_preference(41)
+    #print(prefs.worker.name)
+    testInstance.delete_preference(138)
+    #print(convert_to_pd_dataframe(testInstance.get_preference(6)))

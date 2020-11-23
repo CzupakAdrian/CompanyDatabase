@@ -49,6 +49,12 @@ class WorkerController(BaseController):
             self.add(self.__generate_random())
         self.commit()
 
+    def add_worker(self, name, surname, birth_date, position_id, location_id, insurance_id):
+        print("started")
+        self.session.add(GlobalWorker(id=1, name=name, surname=surname, birth_date=birth_date,
+                                      position_id=position_id, location_id=location_id, insurance_id=insurance_id))
+        self.session.commit()
+
     def get_worker(self, worker_id):
         return self.query(GlobalWorker).get(worker_id)
 
